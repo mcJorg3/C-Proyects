@@ -1,0 +1,222 @@
+/**
+*Juego clasico de ahorcado utilizando arreglos,cadenas y libreria de windows
+*version consola
+*@Autor Ing.Jorge Mancera Méndez
+**/
+#include<iostream>
+#include<Windows.h>
+#include<string>
+#include<string.h>
+#include <cstdlib>
+#include <ctime> 
+
+using namespace std;
+//variables globales
+string tablero[11];
+string original;
+string mono[7];
+int intentos;
+bool bandera;
+//funciones 
+string palabraAzar();
+int tamanio(string palabra);
+void imprimirMuneco(int intento);
+bool existeLetra(string cadena,char letra);
+
+int main()
+{
+	
+	intentos=1;
+	char letra=' ';
+	bandera = false;
+	int i=0;
+	string nueva="";
+	
+	mono[0] =" +-----+";
+	mono[1] = " |";
+	mono[2] = " _";
+	mono[3] = "|_|";
+	mono[4] = "_|_";
+	mono[5] = " |";
+	mono[6] = "/ \\";
+		
+		
+	cout<<"********************"<<endl;
+	cout<<"*||||||||||||||||***"<<endl;
+	cout<<"** JUEGO AHORCADO **"<<endl;
+	cout<<"***||||||||||||||||*"<<endl;
+	cout<<"********************"<<endl;
+	
+		srand(time(NULL));
+	
+		
+		original=palabraAzar();
+	    
+	    int tam=tamanio(original);
+	    char arreglo[tam];
+	    char copia[tam];
+	    strcpy(arreglo,original.c_str()); 
+
+	   for(i=0;i<tam;i++){
+	    	copia[i]='-';
+	   }
+	
+	cout << copia<<endl;
+	while(intentos<8 && bandera==false){
+	
+	cout<<"Tiene "<<tam<<" letras"<<endl;
+	cout<<"\nIntentos: "<<intentos<<endl;	  
+		  
+		  
+	  cout <<  "Introduce una letra: "<<endl;
+	  cin.get(letra);
+	  
+	  
+	  	system("cls");
+	  	
+	  	
+	  	 for ( i = 0; i < tam; i++) {
+		        if (arreglo[i] == letra) {
+		                copia[i] = letra ;
+		        }
+		        
+			}
+	  	
+	  	
+	  	if(existeLetra(original,letra)){
+		   
+	    
+		}else{
+						
+		
+			imprimirMuneco(intentos);	
+		}
+	  	
+	    cout<<copia;
+	    if(intentos==6){
+		cout<<"Que palabra sugieres: "<<endl;
+		string palabra;
+		cin>>palabra;
+		for ( i = 0; i < original.length(); i++) {
+	   
+	    palabra[i] = tolower(copia[i]);
+	  }
+		int equals=strcmp(arreglo,copia);
+		if(equals==0){
+				cout<<"Feliciades, has GANADO...!!!"<<endl;
+				bandera=true;
+		}
+	}
+	
+	   if(intentos==7){
+	   	bandera=true;
+	   	cout<<"Lo sentimos, has perdido...!!!"<<endl;
+	   	cout<<"\nLa palabra correcta es :"<< original<<endl;
+	   }
+	
+	   intentos=intentos+1;	
+		
+		
+	}
+	system("pause");
+	return 0;
+}
+
+
+string palabraAzar(){
+string s="";
+int n=0;
+	tablero[0] = "carro";
+	tablero[1] = "matematicas";
+	tablero[2] = "manzana";
+	tablero[3] = "magia";
+	tablero[4] = "agua";
+	tablero[5] = "ojos";
+	tablero[6] = "delfin";
+	tablero[7] = "perro";
+	tablero[8] = "leon";
+	tablero[9] = "onomatopeya";
+	tablero[10] = "rinoceronte";
+
+	n = 1+rand()%10;
+	s = tablero[n];
+return s;
+}
+
+int tamanio(string p) {
+	int tam=p.length();  
+	return tam;  
+}
+void imprimirMuneco(int intento) {
+    intento+=1;
+    cout<<"\n";
+    switch (intento) {
+        case 1:
+            cout<<mono[0]<<endl;
+            cout<<"\n\n\n\n\n";
+            break;
+        case 2:
+            cout<<mono[0]<<endl;
+            cout<<mono[1]<<endl;
+            cout<<"\n\n\n\n";
+            break;
+        case 3:
+            cout<<mono[0]<<endl;
+            cout<<mono[1]<<endl;
+            cout<<mono[2]<<endl;
+            cout<<"\n\n\n";
+            break;
+        case 4:
+            cout<<mono[0]<<endl;
+            cout<<mono[1]<<endl;
+            cout<<mono[2]<<endl;
+            cout<<mono[3]<<endl;
+            cout<<"\n\n";
+
+            break;
+        case 5:
+            cout<<mono[0]<<endl;
+            cout<<mono[1]<<endl;
+            cout<<mono[2]<<endl;
+            cout<<mono[3]<<endl;
+            cout<<mono[4]<<endl;
+            cout<<"\n";
+            break;
+        case 6:
+            cout<<mono[0]<<endl;
+            cout<<mono[1]<<endl;
+            cout<<mono[2]<<endl;
+            cout<<mono[3]<<endl;
+            cout<<mono[4]<<endl;
+            cout<<mono[5]<<endl;
+            cout<<"\n";
+            break;
+        case 7:
+            cout<<mono[0]<<endl;
+            cout<<mono[1]<<endl;
+            cout<<mono[2]<<endl;
+            cout<<mono[3]<<endl;
+            cout<<mono[4]<<endl;
+            cout<<mono[5]<<endl;
+            cout<<mono[6]<<endl;
+            
+            break;
+    }   
+  
+}
+	    
+bool existeLetra(string cadena,char letra){
+	int i=0;
+	bool ban=false;
+	    	
+	    while(i<cadena.length() && ban==false){
+	    	if (cadena[i] == letra) {
+	            ban=true;
+	        }
+	    		i++;
+		}
+	    	
+	    	
+	return ban;	
+	    	
+}
